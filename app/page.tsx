@@ -12,6 +12,7 @@ interface Message {
   image?: string
   isImageUpload?: boolean
   responsePromptData?: string
+  shouldHaveImage?: boolean
 }
 
 interface ChatSession {
@@ -88,13 +89,14 @@ export default function Home() {
       id: 'welcome',
       title: 'Welcome',
       initialImage: '',
-      messages: [{
-        id: '1',
-        chatId: 'welcome',
-        role: 'assistant',
-        content: "Hello! I'm your AI thumbnail assistant. I can help you create stunning thumbnails from your images. What would you like to create today?",
-        timestamp: new Date()
-      }],
+              messages: [{
+          id: '1',
+          chatId: 'welcome',
+          role: 'assistant',
+          content: "Hello! I'm your AI thumbnail assistant. I can help you create stunning thumbnails from your images. What would you like to create today?",
+          timestamp: new Date(),
+          shouldHaveImage: false
+        }],
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -370,10 +372,13 @@ export default function Home() {
           id: (Date.now() + 2).toString(),
           chatId: currentChatId,
           role: 'assistant',
-          content: `🎉 Here's your generated thumbnail! I've created it based on your description. The original image is available at: ${response.data.uploadedImageUrl}${response.data.usedPreviousImage ? ` (Used previous image: ${response.data.usedPreviousImage})` : ''}`,
+          content: response.data.geminiImageUrl 
+            ? `🎉 Here's your generated thumbnail! I've created it based on your description. The original image is available at: ${response.data.uploadedImageUrl}${response.data.usedPreviousImage ? ` (Used previous image: ${response.data.usedPreviousImage})` : ''}`
+            : `I've processed your request, but I wasn't able to generate an image this time. Please try again with a different prompt or image. The original image is available at: ${response.data.uploadedImageUrl}${response.data.usedPreviousImage ? ` (Used previous image: ${response.data.usedPreviousImage})` : ''}`,
           timestamp: new Date(),
           image: response.data.geminiImageUrl,
-          responsePromptData: response.data.responsePromptData
+          responsePromptData: response.data.responsePromptData,
+          shouldHaveImage: true
         }
         addMessage(successMessage)
 
@@ -412,7 +417,8 @@ export default function Home() {
           chatId: currentChatId, // Use current chat ID
           role: 'assistant',
           content: "I'm sorry, I encountered an error while generating your thumbnail. Please try again or let me know if you need help.",
-          timestamp: new Date()
+          timestamp: new Date(),
+          shouldHaveImage: false
         }
         addMessage(errorMessage)
       } finally {
@@ -427,13 +433,14 @@ export default function Home() {
       id: newChatId,
       title: `Chat ${chatSessions.length + 1}`,
       initialImage: '',
-      messages: [{
-        id: '1',
-        chatId: newChatId,
-        role: 'assistant',
-        content: "Hello! I'm your AI thumbnail assistant. I can help you create stunning thumbnails from your images. What would you like to create today?",
-        timestamp: new Date()
-      }],
+              messages: [{
+          id: '1',
+          chatId: newChatId,
+          role: 'assistant',
+          content: "Hello! I'm your AI thumbnail assistant. I can help you create stunning thumbnails from your images. What would you like to create today?",
+          timestamp: new Date(),
+          shouldHaveImage: false
+        }],
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -788,7 +795,7 @@ export default function Home() {
                 )}
                 
                 {/* Image Display with Preview and Download */}
-                {message.image && (
+                {message.image ? (
                   <div className="mt-3">
                     <div className="relative group">
                       <img
@@ -823,7 +830,19 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                )}
+                ) : message.role === 'assistant' && !message.isImageUpload && message.shouldHaveImage ? (
+                  <div className="mt-3 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <svg className="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2z" />
+                      </svg>
+                      <div>
+                        <p className="text-sm font-medium text-yellow-800">Image Not Generated</p>
+                        <p className="text-xs text-yellow-700 mt-1">The AI couldn't generate an image this time. Please try again with a different prompt or image.</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
                 
                 {/* Timestamp */}
                 {isClient && (

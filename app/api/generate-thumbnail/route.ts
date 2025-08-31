@@ -221,7 +221,7 @@ export async function POST(request: NextRequest) {
       thumbnailUrl: "",
       uploadedImageUrl: `/uploads/${filename}`,
       uploadedImagePath: filepath,
-      geminiImageUrl: process.env.APP_URL+"/uploads/"+geminiImage,
+      geminiImageUrl: isImageGenerated ? process.env.APP_URL+"/uploads/"+geminiImage : null,
       geminiImagePath: isImageGenerated ? geminiImage : null,
       usedPreviousImage: usedPreviousImage,
       responsePromptData: responsePromptData,
