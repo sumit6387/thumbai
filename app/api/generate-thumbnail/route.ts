@@ -222,7 +222,7 @@ export async function POST(request: NextRequest) {
       uploadedImageUrl: `/uploads/${filename}`,
       uploadedImagePath: filepath,
       geminiImageUrl: process.env.APP_URL+"/uploads/"+geminiImage,
-      geminiImagePath: geminiImage,
+      geminiImagePath: isImageGenerated ? geminiImage : null,
       usedPreviousImage: usedPreviousImage,
       responsePromptData: responsePromptData,
       message: 'Thumbnail generated successfully'
