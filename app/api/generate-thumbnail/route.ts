@@ -137,29 +137,35 @@ export async function POST(request: NextRequest) {
 
     const geminiPrompt: any = [
         { text: `
-            You are a helpful assistant that enhances user queries to make them clear, detailed, and precise while preserving the original intent. Your enhanced prompts should be tailored specifically for generating high-quality images or thumbnails using the Gemini image preview model.
+           You are a helpful assistant that enhances user queries to make them clear, detailed, and precise while preserving the original intent. Your enhanced prompts should be tailored specifically for generating high-quality images or thumbnails using the Gemini image preview model.
 
-                When enhancing, add vivid descriptive elements such as:
-                - Visual details about subjects and environment
-                - Lighting and atmosphere (e.g., golden hour, dramatic shadows)
-                - Camera and lens specifics (e.g., focal length, depth of field, bokeh)
-                - Composition and orientation (e.g., close-up, portrait, wide-angle)
-                - Mood or emotional tone (e.g., serene, energetic, mysterious)
-                - Material textures, colors, and any relevant contextual info
+            When enhancing, add vivid descriptive elements such as:
 
-                Additionally, before generating the thumbnail:
-                - Remove the background from the source image to isolate the main subject.
-                - Use this isolated subject image as the primary visual element for the thumbnail.
-                - Ensure the thumbnail visually integrates the isolated subject with the enhanced prompt details harmoniously.
+            - Visual details about subjects and environment
+            - Lighting and atmosphere (e.g., golden hour, dramatic shadows)
+            - Camera and lens specifics (e.g., focal length, depth of field, bokeh)
+            - Composition and orientation (e.g., close-up, portrait, wide-angle)
+            - Mood or emotional tone (e.g., serene, energetic, mysterious)
+            - Material textures, colors, and any relevant contextual info
+            
+            Additionally, before generating the thumbnail:
 
-                Example enhanced prompt:
-                "A photorealistic close-up portrait of an elderly Japanese ceramicist with deep, sun-etched wrinkles and a warm, knowing smile. He is carefully inspecting a freshly glazed tea bowl. The setting is his rustic, sun-drenched workshop. The scene is illuminated by soft, golden hour light streaming through a window, highlighting the fine texture of the clay. Captured with an 85mm portrait lens, resulting in a soft, blurred background (bokeh). The overall mood is serene and masterful. Vertical portrait orientation."
-                "Using the provided image of a living room, change only the blue sofa to be a vintage, brown leather chesterfield sofa. Keep the rest of the room, including the pillows on the sofa and the lighting, unchanged."
+            - Remove the background from the source image to isolate the main subject.
+            - Use this isolated subject image as the primary visual element for the thumbnail.
+            - Ensure the thumbnail visually integrates the isolated subject with the enhanced prompt details harmoniously.
+            The final generated image must be exactly 1280 pixels wide by 720 pixels tall with a wide-angle landscape orientation, strictly preserving this resolution and aspect ratio. The composition should center the isolated subject and provide balanced space for dynamic visual elements around them in harmony.
 
-                Now, enhance the following user query into a detailed, vivid prompt for image or thumbnail generation, incorporating the isolated subject image after background removal:
+            Strict and explicit requirement:
+              - The final generated image must be exactly 1280 pixels wide by 720 pixels tall, enforcing the wide-angle landscape aspect ratio (16:9).
+              - No other resolutions or aspect ratios are acceptable. The composition should center the isolated subject with balanced space around it for dynamic visual elements, maintaining harmony and visual appeal.
 
+            Example enhanced prompt:
+            "A photorealistic close-up portrait of an elderly Japanese ceramicist with deep, sun-etched wrinkles and a warm, knowing smile. He is carefully inspecting a freshly glazed tea bowl. The setting is his rustic, sun-drenched workshop. The scene is illuminated by soft, golden hour light streaming through a window, highlighting the fine texture of the clay. Captured with an 85mm portrait lens, resulting in a soft, blurred background (bokeh). The overall mood is serene and masterful. Vertical portrait orientation."
+            "Using the provided image of a living room, change only the blue sofa to be a vintage, brown leather chesterfield sofa. Keep the rest of the room, including the pillows on the sofa and the lighting, unchanged."
+            
+            Using the above guidelines, now enhance the following user query into a detailed, vivid prompt for image or thumbnail generation, incorporating the isolated subject image after background removal. The output image must be generated only in 1280 x 720 pixels resolution with wide-angle landscape orientation:
 
-                Query: "${prompt}"
+            Query: "${prompt}"
             
             ` },
         {
