@@ -31,7 +31,7 @@ export async function GET(
     else if (ext === 'webp') contentType = 'image/webp'
 
     // Return the image with appropriate headers
-    return new NextResponse(fileBuffer, {
+    return new NextResponse(Uint8Array.from(fileBuffer), {
       headers: {
         'Content-Type': contentType,
         'Cache-Control': 'public, max-age=31536000', // Cache for 1 year
