@@ -834,26 +834,22 @@ export default function Home() {
               key={message.id}
               className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`max-w-2xl ${
-                message.role === 'user' ? 'order-2' : 'order-1'
+              {/* Avatar - Always on the left for AI, right for user */}
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                message.role === 'user' 
+                  ? 'bg-blue-500 ml-3 order-2' 
+                  : 'bg-gray-500 mr-3 order-1'
               }`}>
-                {/* Avatar */}
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  message.role === 'user' 
-                    ? 'bg-blue-500 ml-3' 
-                    : 'bg-gray-500 mr-3'
-                }`}>
-                  <span className="text-white text-sm font-medium">
-                    {message.role === 'user' ? 'U' : 'AI'}
-                  </span>
-                </div>
+                <span className="text-white text-sm font-medium">
+                  {message.role === 'user' ? 'U' : 'AI'}
+                </span>
               </div>
               
               {/* Message Content */}
-              <div className={`rounded-2xl px-4 py-3 ${
+              <div className={`rounded-2xl px-4 py-3 max-w-2xl ${
                 message.role === 'user' 
-                  ? 'bg-blue-500 text-white' 
-                  : 'bg-white border border-gray-200 text-gray-800'
+                  ? 'bg-blue-500 text-white order-1' 
+                  : 'bg-white border border-gray-200 text-gray-800 order-2'
               }`}>
                 <p className="text-sm leading-relaxed">{message.content}</p>
                 
