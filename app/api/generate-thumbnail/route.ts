@@ -137,34 +137,17 @@ export async function POST(request: NextRequest) {
 
     const geminiPrompt: any = [
         { text: `
-           You are a helpful assistant that enhances user queries to make them clear, detailed, and precise while preserving the original intent. Your enhanced prompts should be tailored specifically for generating high-quality images or thumbnails using the Gemini image preview model.
+           You are a helpful assistant that Generates images for youtube thumbnail or generate images based on provided prompt.
 
-            When enhancing, add vivid descriptive elements such as:
+            Generate a striking YouTube thumbnail image with a wide-angle landscape orientation, exactly 1280 pixels wide by 720 pixels tall. The central focus is the isolated main subject with its background fully removed, positioned perfectly in the center of the frame.
 
-            - Visual details about subjects and environment
-            - Lighting and atmosphere (e.g., golden hour, dramatic shadows)
-            - Camera and lens specifics (e.g., focal length, depth of field, bokeh)
-            - Composition and orientation (e.g., close-up, portrait, wide-angle)
-            - Mood or emotional tone (e.g., serene, energetic, mysterious)
-            - Material textures, colors, and any relevant contextual info
-            
-            Additionally, before generating the thumbnail:
+          Surround the subject with a bold, colorful digital backdrop featuring dynamic lighting effects such as radiant glows or dramatic rim light to make the subject pop visually. Incorporate vivid gradients or abstract shapes in bright, contrasting colors like electric blue, fiery orange, or neon green to create energy and draw viewer attention.
 
-            - Remove the background from the source image to isolate the main subject.
-            - Use this isolated subject image as the primary visual element for the thumbnail.
-            - Ensure the thumbnail visually integrates the isolated subject with the enhanced prompt details harmoniously.
-            The final generated image must be exactly 1280 pixels wide by 720 pixels tall with a wide-angle landscape orientation, strictly preserving this resolution and aspect ratio. The composition should center the isolated subject and provide balanced space for dynamic visual elements around them in harmony.
+          Use a subtle depth of field effect around the edges of the thumbnail for added visual focus on the centered subject while keeping the overall image crisp and clean. The lighting should feel vibrant and slightly cinematic, with soft shadows and highlights that add dimensionality to the isolated figure.
 
-            Strict and explicit requirement:
-              - The final generated image must be exactly 1280 pixels wide by 720 pixels tall, enforcing the wide-angle landscape aspect ratio (16:9).
-              - No other resolutions or aspect ratios are acceptable. The composition should center the isolated subject with balanced space around it for dynamic visual elements, maintaining harmony and visual appeal.
+          Leave ample space around the subject for overlaying catchy text or graphic icons without cluttering the composition. The mood should be energetic, modern, and polished, ideal for digital content promotion.
 
-            Example enhanced prompt:
-            "A photorealistic close-up portrait of an elderly Japanese ceramicist with deep, sun-etched wrinkles and a warm, knowing smile. He is carefully inspecting a freshly glazed tea bowl. The setting is his rustic, sun-drenched workshop. The scene is illuminated by soft, golden hour light streaming through a window, highlighting the fine texture of the clay. Captured with an 85mm portrait lens, resulting in a soft, blurred background (bokeh). The overall mood is serene and masterful. Vertical portrait orientation."
-            "Using the provided image of a living room, change only the blue sofa to be a vintage, brown leather chesterfield sofa. Keep the rest of the room, including the pillows on the sofa and the lighting, unchanged."
-            
-            Using the above guidelines, now enhance the following user query into a detailed, vivid prompt for image or thumbnail generation, incorporating the isolated subject image after background removal. The output image must be generated only in 1280 x 720 pixels resolution with wide-angle landscape orientation:
-
+          Strictly maintain the exact resolution of 1280 x 720 pixels with a 16:9 aspect ratio. Ensure the isolated subject is visually dominant and harmoniously integrated with the vivid, engaging background environment to maximize click-through appeal.
             Query: "${prompt}"
             
             ` },
