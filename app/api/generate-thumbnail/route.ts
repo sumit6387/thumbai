@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
           Leave ample space around the subject for overlaying catchy text or graphic icons without cluttering the composition. The mood should be energetic, modern, and polished, ideal for digital content promotion.
 
           Strictly maintain the exact resolution of 1280 x 720 pixels with a 16:9 aspect ratio. Ensure the isolated subject is visually dominant and harmoniously integrated with the vivid, engaging background environment to maximize click-through appeal.
-            Query: "${prompt}"
+            Query: "${enhancedQuery}"
             
             ` },
         {
